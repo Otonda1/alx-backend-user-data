@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#this module is used to filter the data in the log file
-
+"""
+filtered logger module
+"""
 
 import re
+
 
 def filter_datum(fields, redaction, message, separator):
     #function to filter the data in the log file using re
