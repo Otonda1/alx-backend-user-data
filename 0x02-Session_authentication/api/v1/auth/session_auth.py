@@ -1,5 +1,7 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
+"""
+introduction of new class
+"""
 from api.v1.auth.auth import Auth
 
 
