@@ -18,11 +18,6 @@ class SessionAuth(Auth):
     pass
 
 
-class SessionAuth(Auth):
-    """SessionAuth class"""
-    pass
-
-
 if issubclass(SessionAuth, Auth):
     print("SessionAuth is a subclass of Auth")
 else:
