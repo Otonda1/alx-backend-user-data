@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+this module defines the login route
+"""
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort
