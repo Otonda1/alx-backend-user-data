@@ -6,7 +6,7 @@ this module defines the login route
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models.user import User
-
+import os
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
@@ -25,6 +25,7 @@ def login():
             return jsonify({"error": "wrong password"}), 401
         from api.v1.app import auth
         session_id = auth.create_session(user.id)
-        res = jsonify(user.to_json())
-        res.set_cookie("session_id", session_id)
-        return res
+        resp = jsonify(user.to_json())
+        session_name = os.getenv('SESSION_NAME')
+        resp.set_cookie(session_name, session_id)
+        return resp
