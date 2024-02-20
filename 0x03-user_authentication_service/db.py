@@ -47,11 +47,22 @@ class DB:
         """Returns the first row found in the users table
         """
 
-        all_users = self._session.query(User)
+        users = self._session.query(User)
         for k, v in kwargs.items():
             if k not in User.__dict__:
                 raise InvalidRequestError
-            for usr in all_users:
+            for usr in users:
                 if getattr(usr, k) == v:
                     return usr
         raise NoResultFound
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """update user method
+        """
+        user = self.__session.query(User).filter(User.id == user_id).first()
+        if user is None:
+            raise NoResultFound
+        for k, v in kwargs.items():
+            if k not in User.__dict__:
+                raise ValueError
+            setattr(user, k, v)
