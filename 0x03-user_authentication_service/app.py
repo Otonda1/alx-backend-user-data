@@ -2,7 +2,7 @@
 """
 Introduces a flask app
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response, abort
 from auth import Auth
 AUTH = Auth()
 
@@ -26,6 +26,22 @@ def users():
         return jsonify({"email": email, "message": "user created"})
     except ValueError as e:
         return jsonify({"message": "email already registered"}), 400
+
+
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def sessions():
+    """verifies credentials
+    """
+    email = request.form.get('email')
+    password = request.form.get('password')
+    if AUTH.valid_login(email, password) is False:
+        abort(401)
+    else:
+        session_id = AUTH.create_session(email)
+        response = make_response(jsonify({"email": email,
+                                          "message": "logged in"}))
+        response.set_cookie('session_id', session_id)
+        return response
 
 
 if __name__ == "__main__":
