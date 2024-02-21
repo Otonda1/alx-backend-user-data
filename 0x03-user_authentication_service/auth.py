@@ -19,7 +19,7 @@ def _hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), salt)
 
 
-def _generate_uuid(self) -> str:
+def _generate_uuid() -> str:
     """Generate a random UUID
         """
     return str(uuid.uuid4())
