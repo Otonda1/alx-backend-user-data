@@ -4,7 +4,6 @@ Introduces a flask app
 """
 from flask import Flask, jsonify, request, make_response, abort, redirect
 from auth import Auth
-from db import DB
 AUTH = Auth()
 
 app = Flask(__name__)
