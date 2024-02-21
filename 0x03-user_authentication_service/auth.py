@@ -70,8 +70,11 @@ class Auth:
         Get user from session id
         """
         if session_id:
-            usr = self._db.find_user_by(session_id=session_id)
-            if usr:
-                return usr
-            return None
+            try:
+                usr = self._db.find_user_by(session_id=session_id)
+                if usr:
+                    return usr
+                return None
+            except NoResultFound:
+                return None
         return None
