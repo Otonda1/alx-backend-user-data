@@ -2,8 +2,9 @@
 """
 Introduces a flask app
 """
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify, request, make_response, abort, redirect
 from auth import Auth
+from db import DB
 AUTH = Auth()
 
 app = Flask(__name__)
@@ -42,6 +43,19 @@ def sessions():
                                           "message": "logged in"}))
         response.set_cookie('session_id', session_id)
         return response
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Logs out a user
+    """
+    session_id = request.cookies.get('session_id')
+    usr = AUTH.get_user_from_session_id(session_id)
+    if usr:
+        AUTH.destry_session(usr.id)
+        return redirect('/')
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
